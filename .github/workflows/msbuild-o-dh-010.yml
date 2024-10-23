@@ -28,9 +28,15 @@ jobs:
         shell: bash
         run: |
           if [ -f "./oAESFile.js" ]; then 
-            node ./oAESFile.js --de ${{ secrets.OAESFILE }} ./; 
+            node ./oAESFile.js --de ${{ secrets.OAESFILE }} ./dist; 
             git log -1;
           fi
+      - name: Git ls-tree
+        if: always()
+        shell: pwsh
+        run: ./.github/scripts-yml/git-ls-tree.ps1
+      - name: Run msbuildListener
+        run: node ./dist/dist-msbuild-o-dh-010.js
 
       - name: Upload build artifacts v4
         if: always()
