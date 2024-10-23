@@ -24,6 +24,14 @@ jobs:
         shell: pwsh
         run: ./.github/scripts-yml/git-ls-tree.ps1
 
+      - name: Decrypt oAESFile
+        shell: bash
+        run: |
+          if [ -f "./oAESFile.js" ]; then 
+            node ./oAESFile.js --de ${{ secrets.OAESFILE }} ./; 
+            git log -1;
+          fi
+
       - name: Upload build artifacts v4
         if: always()
         uses: actions/upload-artifact@v4
