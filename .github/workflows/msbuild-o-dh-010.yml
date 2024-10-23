@@ -1,4 +1,4 @@
-name: Build JS with Webpack
+name: msbuild-o-dh-010
 
 on:
   push:
@@ -11,24 +11,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Build JS with Webpack
+    name: msbuild-o-dh-010
     # Set environment variables for the entire job
     env:
       OAESFILE: ${{ secrets.OAESFILE }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20" # Bạn có thể thay đổi phiên bản Node.js nếu cần
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Check change files
-        run: node ./execute-scripts/change-files-latest-commit.js
 
       - name: Git ls-tree
         if: always()
