@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-2019
     name: msbuild-o-dh-010
     # Set environment variables for the entire job
     env:
@@ -18,11 +18,18 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v2
 
       - name: Git ls-tree
         if: always()
         shell: pwsh
         run: ./.github/scripts-yml/git-ls-tree.ps1
+
+      - name: Add Janus 3.5
+        shell: bash
+        run: |
+          ./.tools/Janus.v.3.5/setup.bat
 
       - name: Decrypt oAESFile
         shell: bash
